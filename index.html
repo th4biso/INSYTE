@@ -594,6 +594,40 @@ h4 { margin: 0 0 4px; font-family: Manrope, system-ui, sans-serif; color: var(--
   padding: 100px 5vw;
 }
 .auth-info, .auth-form { padding: 28px; }
+/* Sized in CSS as well as on the element, so the space is reserved before
+   the asset loader fills in the src and the heading does not jump. */
+.auth-logo { width: 88px; height: 88px; display: block; margin: 0 0 18px; }
+.auth-tagline { margin-top: 14px; color: var(--muted); font-size: .92rem; max-width: 34ch; }
+/* On a phone this panel sits above the form, so a large mark would push
+   the fields below the fold. It shrinks, and the tagline steps aside —
+   the landing page has already said it. */
+@media (max-width: 760px) {
+  .auth-logo { width: 54px; height: 54px; margin-bottom: 12px; }
+  .auth-tagline { display: none; }
+}
+/* Google's own guidance is that the button carries their mark and is not
+   restyled into the host's palette, so this one is white with a neutral
+   border rather than INSYTE navy. It is full width because it is the
+   fastest way in, not a secondary option tucked beside the form. */
+#googleAuthBlock .google-btn {
+  width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: #fff; color: #3c4043; border: 1px solid #dadce0;
+  font-weight: 600; padding: 11px 16px; border-radius: var(--radius);
+}
+#googleAuthBlock .google-btn:hover:not(:disabled) { background: #f8f9fa; border-color: #c9ced6; }
+#googleAuthBlock .google-btn:disabled { opacity: .7; cursor: progress; }
+.google-g { width: 18px; height: 18px; flex: none; }
+/* A rule with the words sitting in the gap, rather than a bare line that
+   leaves the two routes looking like one form. */
+.auth-or {
+  display: flex; align-items: center; gap: 12px;
+  margin: 16px 0; color: var(--muted); font-size: .84rem;
+}
+.auth-or::before, .auth-or::after {
+  content: ''; flex: 1; height: 1px; background: var(--line);
+}
+#googleAuthBlock.hidden { display: none; }
+
 .auth-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 18px; }
 .auth-tabs button {
   /* Glass pill, same surface language as the cards around it. */
@@ -1678,7 +1712,7 @@ textarea { min-height: 92px; resize: vertical; }
   background: var(--surface); border: 1px solid var(--line);
 }
 .chat-bubble.mine { align-self: flex-end; background: var(--accent); border-color: transparent; color: #fff; }
-.chat-bubble p { margin: 0 0 4px; line-height: 1.55; }
+.chat-bubble p { margin: 0 0 4px; line-height: 1.55; white-space: pre-line; }
 .chat-bubble span { font-size: .68rem; opacity: .7; }
 /* Links inside chat. The two bubble colours need different treatment: a
    purple link on the purple "mine" bubble would be invisible. */
@@ -6464,6 +6498,15 @@ img, svg, video, canvas, table { max-width: 100%; }
 .sign-pad { width: 100%; max-width: 600px; height: 200px; border: 1px dashed var(--line); border-radius: var(--radius); background: #fff; touch-action: none; cursor: crosshair; display: block; }
 .sign-clear { position: absolute; top: 8px; right: 8px; }
 .sign-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 12px; }
+/* The three ways to sign sit on one row, so none of them reads as the
+   fallback. A founder on a phone has usually already signed paper and
+   should not have to hunt for the upload. The label IS the button —
+   the file input inside it is hidden, which keeps the browser's
+   untranslatable "Choose file" chrome off the screen. */
+.sign-ways { margin-top: 10px; flex-wrap: wrap; }
+.sign-upload-btn { cursor: pointer; display: inline-flex; align-items: center; }
+.sign-upload-btn:focus-within { outline: 2px solid var(--accent, #2d5273); outline-offset: 2px; }
+.sign-upload-hint { font-size: .82rem; margin: 8px 0 0; }
 .sign-done { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-top: 10px; }
 .sign-img { max-height: 120px; max-width: 320px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; padding: 6px; }
 .sign-meta { display: grid; gap: 6px; margin: 0; }
@@ -6618,7 +6661,7 @@ img, svg, video, canvas, table { max-width: 100%; }
             <article class="glass"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/></svg></span><b>Business profile</b><p>Stores the business name, industry, location, stage, owners, goals and registration status.</p></article>
             <article class="glass"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M5 8h14"/><path d="M5 8l-2.5 6a3.2 3.2 0 0 0 5 0z"/><path d="M19 8l2.5 6a3.2 3.2 0 0 1-5 0z"/></svg></span><b>Structure guidance</b><p>Explains trade-offs without choosing a legal structure for the user.</p></article>
             <article class="glass"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.4-3 7.9-7 9-4-1.1-7-4.6-7-9V6z"/><path d="M9.2 12.2l2 2 3.6-3.9"/></svg></span><b>Compliance & certificates</b><p>Tracks relevance, importance, official sources, status and renewal reminders.</p></article>
-            <article class="glass"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span><b>Document vault</b><p>Tracks completeness and expiry for IDs, proof of address, tax, B-BBEE, CSD, licences and proposals.</p></article>
+            <article class="glass"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span><b>Document vault</b><p>Tracks which documents you hold and when they expire &mdash; IDs, proof of address, tax, B-BBEE, CSD, licences and proposals. The files stay on your device.</p></article>
             <article class="glass"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M14.5 9.2A2.8 2.8 0 0 0 12 8c-1.6 0-2.6.9-2.6 2s.9 1.7 2.6 2 2.6.9 2.6 2-1 2-2.6 2a2.8 2.8 0 0 1-2.5-1.2"/><path d="M12 6.4v11.2"/></svg></span><b>Funding hub</b><p>Links founders to official funding and business-support providers once the business is ready.</p></article>
             <article class="glass"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1.3"/><circle cx="4" cy="12" r="1.3"/><circle cx="4" cy="18" r="1.3"/></svg></span><b>Tenders hub</b><p>Links founders to official tender and supplier portals after registration is complete.</p></article>
             <article class="glass"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19.5a5.5 5.5 0 0 1 11 0"/><path d="M16.5 6.2a3 3 0 0 1 0 5.6"/><path d="M17.5 14.4a5 5 0 0 1 3.2 4.6"/></svg></span><b>Mentors</b><p>Matches mentors by industry, stage and language, with visible selection guidance.</p></article>
@@ -6757,15 +6800,54 @@ img, svg, video, canvas, table { max-width: 100%; }
       <section class="page" id="page-auth">
         <div class="auth-shell">
           <div class="auth-info glass">
+            <!--
+              data-asset is filled in by the small loader near the top of
+              the file, so this reuses the logo the header already carries
+              rather than embedding a second copy. The panel had a lot of
+              empty space under the copy and nothing identifying the site
+              someone was about to hand a password to.
+
+              alt is empty on purpose: "INSYTE portal" is read out by the
+              eyebrow and the heading directly beneath, and a screen reader
+              announcing the name three times is worse than not at all.
+            -->
+            <img class="auth-logo" data-asset="logo" alt="" width="88" height="88">
             <p class="eyebrow">INSYTE portal</p>
             <h2 id="authTitle">Log in</h2>
             <p id="authCopy">Log in to your INSYTE portal, or create a founder account to get started.</p>
+            <p class="auth-tagline">Business-readiness guidance for young South African entrepreneurs.</p>
           </div>
           <form class="auth-form glass" id="authForm">
             <div class="auth-tabs">
               <button type="button" class="active" data-mode="login">Log in</button>
               <button type="button" data-mode="signup">Create account</button>
               <button type="button" data-mode="reset">Reset password</button>
+            </div>
+            <!--
+              Google sign-in, for identity only.
+
+              Deliberately NOT asking for calendar permission here. Signing
+              in and letting INSYTE write to someone's calendar are two
+              different grants, and bundling them would put "INSYTE wants
+              to edit your calendar" in front of a founder before she has
+              seen the product. The calendar connect asks for its own scope,
+              when she chooses it, and is untouched by this.
+
+              Hidden on the reset step: there is no password to reset on an
+              account that has never had one.
+            -->
+            <div id="googleAuthBlock">
+              <button type="button" class="btn google-btn" id="googleAuthBtn">
+                <svg class="google-g" viewBox="0 0 18 18" aria-hidden="true" focusable="false">
+                  <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/>
+                  <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18z"/>
+                  <path fill="#FBBC05" d="M3.97 10.72a5.4 5.4 0 0 1 0-3.44V4.95H.96a9 9 0 0 0 0 8.1l3.01-2.33z"/>
+                  <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.9 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/>
+                </svg>
+                <span>Continue with Google</span>
+              </button>
+              <p class="auth-or"><span>or use your email</span></p>
+              <p class="form-error hidden" id="googleAuthError" role="alert"></p>
             </div>
             <div id="loginFields">
               <label>Email <input id="loginEmail" type="email" required autocomplete="email" placeholder="name@example.co.za"></label>
@@ -7304,7 +7386,7 @@ img, svg, video, canvas, table { max-width: 100%; }
               <svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M9.5 15l1.8 1.8 3.4-3.6"/></svg>
               <span class="nav-label">Check-ins</span>
             </button>
-            <button class="nav-item" data-app-tab="reports" data-label="Reports" data-requires-plan="healthReports">
+            <button class="nav-item" data-app-tab="reports" data-requires-checkins data-label="Reports" data-requires-plan="healthReports">
               <svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
               <span class="nav-label">Reports</span>
             </button>
@@ -7711,6 +7793,36 @@ img, svg, video, canvas, table { max-width: 100%; }
   function resetRedirectUrl() {
     return /^https?:$/.test(location.protocol) ? `${location.origin}${location.pathname}` : undefined;
   }
+  // ---------- Google sign-in ----------
+  //  Identity only. `scopes` is left at Supabase's default, which is
+  //  openid/email/profile — non-sensitive scopes that Google approves
+  //  automatically and that carry no 100-user cap. Asking for calendar
+  //  here would drag the whole app into Google's sensitive-scope review
+  //  and put a permission screen in front of every new founder, so the
+  //  calendar connect keeps asking for its own scope at the moment it
+  //  is actually used.
+  //
+  //  Nothing else is needed on the way back in. The client is created
+  //  with detectSessionInUrl, so Supabase consumes the callback itself
+  //  and fires SIGNED_IN, which the existing onAuthStateChange handler
+  //  already turns into a session — the same path the email
+  //  confirmation link uses.
+  async function cloudSignInWithGoogle() {
+    const redirectTo = resetRedirectUrl();
+    return sb.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        ...(redirectTo ? { redirectTo } : {}),
+        queryParams: {
+          //  Without this, a founder with several Google accounts is
+          //  signed in as whichever one the browser happens to hold,
+          //  with no way to tell and no way to change it.
+          prompt: 'select_account'
+        }
+      }
+    });
+  }
+
   async function cloudSendResetEmail(email) {
     const redirectTo = resetRedirectUrl();
     return sb.auth.resetPasswordForEmail(email, redirectTo ? { redirectTo } : {});
@@ -8047,7 +8159,14 @@ img, svg, video, canvas, table { max-width: 100%; }
     const user = profile ? dbProfileToLocalUser(profile) : {
       id: authUser.id,
       role: authUser.user_metadata?.role || 'founder',
-      name: authUser.user_metadata?.name || '',
+      //  Google supplies the display name as `full_name`, not `name` —
+      //  `name` is what our own signup writes. Reading only one of them
+      //  left a founder who signed in with Google greeted by an empty
+      //  space where their name should be.
+      name: authUser.user_metadata?.name
+        || authUser.user_metadata?.full_name
+        || [authUser.user_metadata?.given_name, authUser.user_metadata?.family_name].filter(Boolean).join(' ')
+        || '',
       email: authUser.email,
       phone: '',
       hasSeenPortalTour: true
@@ -8093,10 +8212,17 @@ img, svg, video, canvas, table { max-width: 100%; }
     // If this device last viewed a different held role, resume there
     // instead of the profile's default — that's what makes switching feel
     // persistent rather than resetting on every login.
-    try {
-      const savedRole = localStorage.getItem(`insyteActiveRole:${user.id}`);
-      if (savedRole && roles.includes(savedRole)) user.role = savedRole;
-    } catch { /* localStorage unavailable. Just use the profile's role */ }
+    // Always open on the founder side when the account has one; admin and
+    // mentor stay one click away in the role switcher.
+    const founderRole = ['founder', 'cofounder'].find(r => roles.has(r));
+    if (founderRole) {
+      user.role = founderRole;
+    } else {
+      try {
+        const savedRole = localStorage.getItem(`insyteActiveRole:${user.id}`);
+        if (savedRole && roles.has(savedRole)) user.role = savedRole;
+      } catch { /* localStorage unavailable. Just use the profile's role */ }
+    }
 
     db.users = db.users.filter(u => u.id !== user.id);
     db.users.push(user);
@@ -8133,6 +8259,10 @@ img, svg, video, canvas, table { max-width: 100%; }
       // never appears untracked for a moment and then flips — and so
       // the deadline sweep knows which ones to shout about.
       await loadTrackingFromCloud(user.id);
+      // The stored signature, so a founder who signed on her laptop is
+      // not asked to sign again on her phone. Owner-only at the
+      // database level; see saveSignatureToCloud.
+      await loadSignatureFromCloud(user.id);
       // Needed by the dashboard milestone, which is drawn before the founder
       // ever opens the Mentors tab.
       await loadRegisteredMentors(user.id);
@@ -10684,6 +10814,13 @@ img, svg, video, canvas, table { max-width: 100%; }
     $('#loginFields').classList.toggle('hidden', mode !== 'login');
     $('#signupFields').classList.toggle('hidden', mode !== 'signup');
     $('#resetFields').classList.toggle('hidden', mode !== 'reset');
+    // Offered for logging in and for creating an account, since on Google
+    // those are the same click. Not on the reset step: an account that has
+    // only ever signed in with Google has no password to reset, and
+    // showing it there would suggest otherwise.
+    $('#googleAuthBlock')?.classList.toggle('hidden', mode === 'reset');
+    const googleError = $('#googleAuthError');
+    if (googleError) { googleError.textContent = ''; googleError.classList.add('hidden'); }
     $('#authSubmit').classList.toggle('hidden', mode !== 'login');
     $('#authSubmit').textContent = 'Log in';
     $$('.auth-tabs button').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
@@ -12078,7 +12215,7 @@ img, svg, video, canvas, table { max-width: 100%; }
       // is granted — turning people away because they happened to register as
       // a mentor first meant they could never use the rest of the product.
       const heldRoles = user.roles || [user.role];
-      let founderSide = heldRoles.find(r => ['founder', 'cofounder', 'admin'].includes(r));
+      let founderSide = ['founder', 'cofounder', 'admin'].find(r => heldRoles.includes(r));
       if (!founderSide) {
         founderSide = 'founder';
         user.roles = [...new Set([...heldRoles, 'founder'])];
@@ -13088,9 +13225,8 @@ img, svg, video, canvas, table { max-width: 100%; }
     { tab:'compliance', selector:'.compliance-panel', title:'Compliance tracker', copy:'Track permits, licences and credibility items by planned, in progress or completed status.' },
     { tab:'compliance', selector:'.compliance-panel', title:'Mandatory labels', copy:'Mandatory and recommended labels help you separate core requirements from useful credibility items.' },
     { tab:'compliance', selector:'.compliance-panel', title:'Source checks', copy:'Source links help you verify requirements before relying on them.' },
-    { tab:'documents', selector:'.document-vault-card', title:'Document vault', copy:'Your vault groups evidence by purpose so identity, compliance and application documents are easier to understand.' },
-    { tab:'documents', selector:'.document-group', title:'Document groups', copy:'Each group shows which documents are ready, being prepared, missing or newly uploaded.' },
-    { tab:'documents', selector:'.document-builder-card', title:'Guided builders', copy:'Builders help turn your business information into reusable documents like a capability statement.' },
+    { tab:'documents', selector:'.document-vault-card', title:'Document vault', copy:'Your vault groups documents by purpose so identity, compliance and application paperwork is easier to keep on top of. It tracks what you hold and when it expires; the files themselves stay on your device.' },
+    { tab:'documents', selector:'.document-group', title:'Document groups', copy:'Each group shows which documents are ready, being prepared, missing or newly recorded.' },
     { tab:'funding', selector:'.locked-feature, .filter-panel', title:'Funding unlock', copy:'Funding stays locked until registration is confirmed so applications start from the right foundation.' },
     { tab:'tenders', selector:'.locked-feature, .filter-panel', title:'Tender unlock', copy:'Tenders unlock after registration because most opportunities need proof, tax and supplier readiness.' },
     { tab:'mentors', selector:'.mentor-section', title:'Industry matches', copy:'Matched mentors appear first based on your business industry, with more mentors below.' },
@@ -13286,7 +13422,7 @@ img, svg, video, canvas, table { max-width: 100%; }
         'Business Readiness Score',
         'Certification recommendations',
         'Business plan builder (guided questions, written in your own words)',
-        'Document vault (up to 5 documents)',
+        'Document tracker (up to 5 documents)',
         'Basic templates and guidance on choosing a mentor'
       ]
     },
@@ -13301,9 +13437,8 @@ img, svg, video, canvas, table { max-width: 100%; }
         'Personalised opportunity matching',
         'Certificate-expiry reminders',
         'AI-tailored business plan builder. Turns your answers into a polished, professional plan',
-        'Business profile and capability-statement builder',
         'AI document review',
-        'Document vault (up to 50 documents)',
+        'Document tracker (up to 50 documents)',
         'PDF and Word exports'
       ]
     },
@@ -13407,7 +13542,6 @@ img, svg, video, canvas, table { max-width: 100%; }
   // buy exactly that.
   const DOCUMENT_PRODUCTS = [
     { id: 'business-profile-export', name: 'Business profile export',      price: 49,  unlocks: 'documentExport',       blurb: 'Your business profile as a formatted PDF or Word file you can send to anyone.' },
-    { id: 'capability-statement',    name: 'Capability statement',         price: 79,  unlocks: 'capabilityStatement',  blurb: 'The one-page profile suppliers and corporates ask for before they will consider you.' },
     { id: 'ai-document-review',      name: 'AI document review',           price: 49,  unlocks: 'aiDocumentReview',     blurb: 'INSYTE reads a document and tells you what a funder will question.' },
     { id: 'business-plan-pack',      name: 'Business-plan document pack',  price: 99,  unlocks: 'planBuilder',          blurb: 'The full guided plan builder plus the Word export, kept permanently.' },
     { id: 'financial-projection',    name: 'Financial projection template', price: 99, unlocks: 'financialProjections', blurb: 'Three-year income, cost and profit projections built from your own figures.' },
@@ -17329,6 +17463,7 @@ img, svg, video, canvas, table { max-width: 100%; }
       setNavLabel(button, locked);
     });
     $$('[data-requires-checkins]').forEach(button => {
+      if (button.dataset.requiresPlan && !can(button.dataset.requiresPlan)) return;
       const locked = checkinGate().locked;
       button.classList.toggle('locked', locked);
       button.setAttribute('aria-label', locked ? `${button.dataset.label} - locked until the business is operating and readiness steps are complete` : button.dataset.label);
@@ -17349,7 +17484,7 @@ img, svg, video, canvas, table { max-width: 100%; }
       // "finish registering" instead.
       const journeyHeld =
         (button.hasAttribute('data-requires-registration') && !isRegistered() && !devUnlock()) ||
-        (button.hasAttribute('data-requires-checkins') && checkinGate().locked);
+        (button.hasAttribute('data-requires-checkins') && checkinGate().locked && can(button.dataset.requiresPlan));
       if (journeyHeld) return;
       const featureKey = button.dataset.requiresPlan;
       const locked = !can(featureKey);
@@ -17956,7 +18091,9 @@ img, svg, video, canvas, table { max-width: 100%; }
     // provider links until the business is registered. Tenders stays fully
     // locked because responding to one is only possible as a registered entity.
     if (tab === 'tenders' && !isRegistered() && !devUnlock()) return renderLockedFeature(tab);
-    if (tab === 'checkins' && checkinGate().locked) return renderLockedFeature(tab);
+    if (tab === 'checkins' && !can('operatingCheckins')) return renderPaywall('operatingCheckins');
+    if (tab === 'reports' && !can('healthReports')) return renderPaywall('healthReports');
+    if ((tab === 'checkins' || tab === 'reports') && checkinGate().locked) return renderLockedFeature(tab);
     // Plan gates. These run after the journey gates above so a founder who is
     // blocked for a reason money cannot fix is told that reason, rather than
     // being shown a plan they would gain nothing from.
@@ -18026,12 +18163,12 @@ img, svg, video, canvas, table { max-width: 100%; }
     </section>`;
   }
   function renderLockedFeature(tab) {
-    if (tab === 'checkins') {
+    if (tab === 'checkins' || tab === 'reports') {
       const gate = checkinGate();
       return `<section class="locked-feature glass">
         <div class="locked-icon" aria-hidden="true">&#128274;</div>
-        <p class="eyebrow">Operations check-ins locked</p>
-        <h3>Use check-ins once the business is operating</h3>
+        <p class="eyebrow">${tab === 'reports' ? 'Business health reports locked' : 'Operations check-ins locked'}</p>
+        <h3>${tab === 'reports' ? 'Reports are built from your check-ins' : 'Use check-ins once the business is operating'}</h3>
         <p>${esc(gate.reason)} Check-ins are meant to track real sales, customers, stock, cash-flow, service delivery and staffing signals.</p>
         ${gate.missing.length ? `<div class="unlock-list">${gate.missing.map((item, i) => `<span>${i + 1}</span><p>${esc(item)}</p>`).join('')}</div>` : ''}
         <div class="action-row"><button class="btn primary" data-app-tab="dashboard">Back to next step</button><button class="btn ghost" data-app-tab="business">Update business stage</button></div>
@@ -18489,14 +18626,39 @@ img, svg, video, canvas, table { max-width: 100%; }
       items.push({ date: iso, days: n, label: 'Tender closes', detail: t.title || 'Saved tender', tab: 'tenders' });
     });
 
-    // Unread reminders belong here too — they are things needing attention,
-    // and a separate card for them just split the founder's attention in two.
-    // days:-1 keeps them above future-dated items without claiming a date
-    // they do not have.
-    (notifications(userId) || []).filter(n => !n.read).slice(0, 3).forEach(n => {
-      items.push({ date: '', days: -0.5, label: n.message, detail: NOTIFICATION_KINDS[n.kind] || 'Reminder',
-        tab: n.actionTab || 'dashboard', notice: true });
+    // Scheduled mentor meetings, the next 30 days. Cancelled ones and any
+    // that have already ended are skipped, same as the calendar.
+    const hhmm = d => isNaN(d.getTime()) ? '' : d.toLocaleTimeString('en-ZA', { hour: '2-digit', minute: '2-digit', hour12: false });
+    // meetingsByRequest is declared further down the script; guarded so a
+    // render before it exists cannot take the dashboard down with it.
+    try { meetingsByRequest.forEach((meetings, requestId) => {
+      (meetings || []).forEach(meeting => {
+        if (meeting.status === 'cancelled' || meetingIsPast(meeting)) return;
+        const startsAt = new Date(meeting.starts_at);
+        if (isNaN(startsAt.getTime())) return;
+        const iso = isoOf(startsAt);
+        const n = daysBetween(iso);
+        if (n === null || n < 0 || n > 30) return;
+        const req = (founderRequests || []).find(r => r.id === requestId);
+        const mentorName = (registeredMentors || []).find(m => m.user_id === req?.mentor_user_id)?.full_name;
+        items.push({ date: iso, days: n, label: mentorName ? `Meeting with ${mentorName}` : 'Mentor meeting',
+          detail: [hhmm(startsAt), req?.goal || 'Mentorship'].filter(Boolean).join(' · '), tab: 'mentors' });
+      });
+    }); } catch (e) { /* meetings not loaded yet */ }
+
+    // Entries the founder (or an automation on their behalf) put in the
+    // calendar, the next 30 days.
+    (manualEvents(userId) || []).forEach(e => {
+      const iso = String(e.date || '').slice(0, 10);
+      const n = daysBetween(iso);
+      if (n === null || n < 0 || n > 30) return;
+      items.push({ date: iso, days: n, label: e.title || 'Calendar entry',
+        detail: [e.time || '', e.detail || 'Your calendar'].filter(Boolean).join(' · '), tab: 'calendar' });
     });
+
+    // Notifications are deliberately not listed here. They already live on
+    // the bell, and showing them here put tender notices that had nothing
+    // to do with this founder at the top of "What's due".
 
     return items.sort((a, b) => (a.days ?? 999) - (b.days ?? 999)).slice(0, 6);
   }
@@ -18540,7 +18702,7 @@ img, svg, video, canvas, table { max-width: 100%; }
             <span style="color:${tone(t)};font-weight:600;white-space:nowrap;">${esc(when(t))}</span>
           </div>
         </button>`).join('')}</div>`
-      : `<p class="muted" style="margin-top:10px;">Nothing scheduled. Dates appear here from your check-in rhythm, document expiry dates and tenders you save.</p>`}
+      : `<p class="muted" style="margin-top:10px;">Nothing due. Dates appear here from mentor meetings, your calendar entries, your check-in rhythm, document expiry dates and tenders you save.</p>`}
     </section>`;
   }
 
@@ -18684,6 +18846,11 @@ img, svg, video, canvas, table { max-width: 100%; }
       rerender();
     }
   }
+  //  One switch, named where the card is defined rather than buried at the
+  //  call site, so turning the feature back on is a single edit by someone
+  //  who has just deployed the function and is looking for exactly this.
+  const CALENDAR_SUBSCRIBE_READY = false;
+
   function renderCalendarSubscribeCard(role, state) {
     const httpsUrl = state.subscribeUrl;
     const webcalUrl = httpsUrl.replace(/^https?:\/\//, 'webcal://');
@@ -19637,7 +19804,17 @@ img, svg, video, canvas, table { max-width: 100%; }
         ${renderCalendarSide(byDate, selected, upcoming, todayIso)}
       </section>
 
-      ${renderCalendarSubscribeCard(calendarScope(), calState)}
+      ${//  The subscribe card is hidden until the feed behind it exists.
+        //  It needs an Edge Function to mint the .ics URL, and that is not
+        //  deployed, so the only thing a founder could do with the card
+        //  was press the button and be told it does not work. A control
+        //  that cannot succeed is worse than no control.
+        //
+        //  The card itself is kept, not deleted: deploying the function is
+        //  all that stands between here and a working subscription, and
+        //  rewriting it later from nothing would be wasted work. Set
+        //  CALENDAR_SUBSCRIBE_READY to true once the function is live.
+        CALENDAR_SUBSCRIBE_READY ? renderCalendarSubscribeCard(calendarScope(), calState) : ''}
     </div>
     ${renderManualEventForm()}
     <!-- END SHARED COMPONENT: Calendar -->`;
@@ -21066,8 +21243,8 @@ Added from INSYTE.` : 'Added from INSYTE.',
       <section class="document-hero glass document-vault-card">
         <div>
           <p class="eyebrow">Document vault</p>
-          <h3>Your evidence pack for banks, funders, tenders and mentors</h3>
-          <p class="muted">Keep the proof in one place and mark what is ready. INSYTE counts the vault as ready once three core documents are complete.</p>
+          <h3>Track the paperwork banks, funders, tenders and mentors will ask for</h3>
+          <p class="muted">INSYTE keeps the <b>list</b> &mdash; which documents you have, which are missing and when each one expires. The files themselves stay on your own device: nothing here is uploaded or stored. Keep them somewhere you can find them when an application asks. INSYTE counts the vault as ready once three core documents are marked complete.</p>
           <!-- The three stat cards that used to sit under this said the same
                thing the ring already says — "Completed documents" beside a
                "12/18 ready" ring, and "Still being prepared" for the
@@ -21076,12 +21253,11 @@ Added from INSYTE.` : 'Added from INSYTE.',
                files rather than placeholder rows INSYTE created, so that is
                the only part kept. -->
           <p class="muted doc-hero-facts">
-            <b>${uploadedCount}</b> file${uploadedCount === 1 ? '' : 's'} uploaded${missing ? ` &middot; <b>${missing}</b> still to prepare` : ''}
+            <b>${uploadedCount}</b> marked as obtained${missing ? ` &middot; <b>${missing}</b> still to prepare` : ''}
           </p>
         </div>
         <div class="doc-score"><strong>${complete}%</strong><span>${completed}/${userDocs.length || 0} ready</span></div>
       </section>
-      ${renderVaultScanPanel()}
       ${renderVaultScanPanel()}
       <section class="panel glass document-types-card">
         <details class="tuck" style="border-top:0;margin-top:0;padding-top:0;">
@@ -21090,28 +21266,28 @@ Added from INSYTE.` : 'Added from INSYTE.',
           <div class="cards-grid">${documentTypes.filter(group => group[1].length).map(group => `<article class="component"><b>${esc(group[0])}</b><ul class="doc-type-list">${group[1].map(item => `<li>${esc(item)}</li>`).join('')}</ul></article>`).join('')}</div>
         </details>
       </section>
-      <section class="panel glass upload-card"><div class="between"><div><h3>Add a document</h3><p class="muted">Name the file and choose its type. It is stored against your account as provided.</p></div>${quota.unlimited
-        ? badge('Unlimited storage')
+      <section class="panel glass upload-card"><div class="between"><div><h3>Record a document you have</h3><p class="muted">Name it and choose its type. INSYTE records that you hold it, and its expiry date if it has one. The file is not uploaded &mdash; only its name is kept, so you can tell which one you meant.</p></div>${quota.unlimited
+        ? badge('Unlimited documents')
         : `<span class="badge ${quota.full ? 'danger' : quota.remaining <= 1 ? 'warn' : 'ok'}">${quota.used} of ${quota.limit} used</span>`}</div>
         ${quota.unlimited ? '' : `<div class="quota-meter" aria-hidden="true"><span style="transform:scaleX(${Math.min(100, Math.round(quota.used / quota.limit * 100)) / 100})"></span></div>
         <p class="muted">${quota.full
-          ? `Your ${esc(TIERS[quota.tier].name)} plan holds ${quota.limit}. Remove one you no longer need. There is a Remove button on every uploaded document below. Or move to a plan with more room.`
+          ? `Your ${esc(TIERS[quota.tier].name)} plan tracks ${quota.limit}. Remove one you no longer need &mdash; there is a Remove button on every document below &mdash; or move to a plan that tracks more.`
           : `${quota.remaining} more document${quota.remaining === 1 ? '' : 's'} on your ${esc(TIERS[quota.tier].name)} plan.`}</p>`}
         <p class="form-error hidden" id="docQuotaNotice" aria-live="polite"></p>
-        <div class="builder"><label>Document name<input id="docUploadName" placeholder="e.g. Latest proof of address" ${quota.full ? 'disabled' : ''}></label><label>Document type<select id="docUploadType" ${quota.full ? 'disabled' : ''}>${documentTypes.flatMap(group => group[1]).map(type => `<option>${esc(type)}</option>`).join('')}<option>Other document</option></select></label></div><label>Upload file<input id="docUpload" type="file" accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf" ${quota.full ? 'disabled' : ''}></label>
-        ${quota.full ? '<div class="action-row"><button class="btn primary" data-app-tab="billing">See plans with more storage</button></div>' : ''}</section>
+        <div class="builder"><label>Document name<input id="docUploadName" placeholder="e.g. Latest proof of address" ${quota.full ? 'disabled' : ''}></label><label>Document type<select id="docUploadType" ${quota.full ? 'disabled' : ''}>${documentTypes.flatMap(group => group[1]).map(type => `<option>${esc(type)}</option>`).join('')}<option>Other document</option></select></label></div><label>Pick the file, so INSYTE can record its name<input id="docUpload" type="file" accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf" ${quota.full ? 'disabled' : ''}></label>
+        ${quota.full ? '<div class="action-row"><button class="btn primary" data-app-tab="billing">See plans that track more</button></div>' : ''}</section>
       ${userDocs.length ? groups.map(group => {
         const docs = userDocs.filter(d => groupFor(d) === group);
         if (!docs.length) return '';
         return `<section class="panel glass document-group"><div class="between"><div><p class="eyebrow">${esc(group)}</p><h3>${esc(group === 'Identity and registration' ? 'Who you are and whether the business exists' : group === 'Compliance and supplier proof' ? 'Proof that helps you look credible' : 'Documents used when applying or pitching')}</h3>${healthBar(docs.filter(d => d.status === 'Completed').length, docs.length, true)}</div>${badge(`${docs.filter(d => d.status === 'Completed').length}/${docs.length} ready`)}</div><div class="module-grid">${docs.map(d => `<article class="doc-card structured-doc"><div class="between"><b>${esc(d.title)}</b>${d.uploaded ? '' : badge(d.status)}</div><p class="muted">${esc(d.category)}</p><p>${esc(d.notes)}</p>${d.uploaded
-          ? `<p class="muted">${d.fileName ? esc(d.fileName) : 'Uploaded by you'}${d.uploadedAt ? ` &middot; ${esc(d.uploadedAt)}` : ''}</p>
+          ? `<p class="muted">${d.fileName ? esc(d.fileName) : 'Marked as obtained by you'}${d.uploadedAt ? ` &middot; ${esc(d.uploadedAt)}` : ''}</p>
              <div class="doc-card-actions">
                <button class="small-btn" data-document-replace="${esc(d.id)}" type="button">Replace file</button>
                <button class="small-btn danger" data-document-remove="${esc(d.id)}" type="button">Remove</button>
              </div>`
           : `<label>Status<select data-document-status="${d.id}"><option ${d.status === 'Planned' ? 'selected' : ''}>Planned</option><option ${d.status === 'Missing' ? 'selected' : ''}>Missing</option><option ${d.status === 'Draft' ? 'selected' : ''}>Draft</option><option ${d.status === 'In progress' ? 'selected' : ''}>In progress</option><option ${d.status === 'Completed' ? 'selected' : ''}>Completed</option></select></label>`}</article>`).join('')}</div></section>`;
       }).join('') : emptyState('No documents in your vault yet', 'Anything you uploaded during registration appears here automatically. Add more with the upload box above. You do not need to wait for verification.')}
-      ${can('capabilityStatement') ? `<section class="panel glass document-builder-card"><div class="between"><div><p class="eyebrow">Builder</p><h3>Capability statement draft</h3><p class="muted">Use this to produce a simple profile you can refine before sharing with funders, customers or supplier portals.</p></div></div><div class="builder"><label>Business summary<textarea id="builderSummary">${esc(business().goals)}</textarea></label><label>Services<textarea id="builderServices">${esc(business().products)}</textarea></label><label>Customers<textarea id="builderCustomers">${esc(business().customers)}</textarea></label><label>Contact<input id="builderContact" value="${esc(business().city)}, ${esc(business().province)}"></label></div><button class="btn primary" id="buildDocBtn">Generate document</button><pre class="builder-output" id="builderOutput"></pre></section>` : renderPaywall('capabilityStatement')}
+      
     </div>`;
   }
   // The same document scan, on the vault side: what was checked at
@@ -21824,7 +22000,8 @@ Added from INSYTE.` : 'Added from INSYTE.',
         text: item.collectionMethod === 'manual'
           ? `Entered by hand and last confirmed ${days} days ago. This provider does not allow automated checking, so confirm on their site before you spend time on it.`
           : `Last confirmed by a person ${days} days ago.${autoNote} Criteria and deadlines change often. Confirm on the provider's site before you spend time on it.`,
-        stale: true
+        stale: true,
+        ageOnly: true
       };
     }
     if (item.collectionMethod === 'manual') {
@@ -22627,7 +22804,7 @@ Added from INSYTE.` : 'Added from INSYTE.',
             ? `<p class="muted" style="font-size:.84rem;">Applications are open continuously, so there is no closing date to miss.</p>`
             : ''}
       ${sourceMeta(item, 'Official funding site')}
-      <p class="muted" style="font-size:.84rem;color:${v.stale ? '#b45309' : 'inherit'};">${v.stale ? '&#9888; ' : ''}${esc(v.text)}</p>
+      ${v.ageOnly ? '' : `<p class="muted" style="font-size:.84rem;color:${v.stale ? '#b45309' : 'inherit'};">${v.stale ? '&#9888; ' : ''}${esc(v.text)}</p>`}
 
       <div class="action-row">
         <a class="btn primary" href="${esc(applyUrl || '#')}" target="_blank" rel="noreferrer">Open official site</a>
@@ -22749,8 +22926,12 @@ Added from INSYTE.` : 'Added from INSYTE.',
     // card — rather than recomputed three times with three chances to drift.
     const scored = userFunding.map(x => ({ item: x, fit: fundingMatch(x) }));
     const counters = fundingCounters(scored);
-    const blocked = scored.filter(x => !x.fit.applicable);
-    const pool = (f.showAll ? scored : scored.filter(x => x.fit.applicable))
+    // Like tenders: every open programme is listed, whatever the industry
+    // or province. Province-only programmes for another province go in
+    // their own section at the bottom instead of being hidden. Only closed
+    // and dismissed programmes are hidden (Show them anyway brings them back).
+    const blocked = scored.filter(x => x.fit.closed || isIgnored(x.item.id));
+    const pool = (f.showAll ? scored : scored.filter(x => !x.fit.closed))
       // A founder who said "not for me" should not keep seeing it.
       // Kept visible when they are explicitly filtering for ignored.
       .filter(({ item }) => f.showAll || !isIgnored(item.id));
@@ -22795,8 +22976,10 @@ Added from INSYTE.` : 'Added from INSYTE.',
     //  a deadline this week outranks "matched to you", because missing
     //  it is the thing that actually costs the founder money.
     const claimed = new Set();
+    // Other-province programmes are never claimed by the sections above:
+    // they cannot fund a business based where this one is.
     const claim = predicate => filtered.filter(row => {
-      if (claimed.has(row.item.id) || !predicate(row)) return false;
+      if (claimed.has(row.item.id) || !row.fit.eligible || !predicate(row)) return false;
       claimed.add(row.item.id);
       return true;
     });
@@ -22812,7 +22995,8 @@ Added from INSYTE.` : 'Added from INSYTE.',
         rows: claim(x => x.fit.score >= 3) }
     ].filter(s => s.rows.length);
 
-    const rest = filtered.filter(r => !claimed.has(r.item.id));
+    const rest = filtered.filter(r => !claimed.has(r.item.id) && r.fit.eligible);
+    const otherProvince = filtered.filter(r => !claimed.has(r.item.id) && !r.fit.eligible);
 
     const preview = registered ? null : userFunding.find(x => x.id === f.previewId);
     const renderRow = ({ item, fit }) => registered
@@ -22827,8 +23011,8 @@ Added from INSYTE.` : 'Added from INSYTE.',
       ${blocked.length ? `<section class="panel glass" style="padding:14px 18px;">
         <div class="between" style="flex-wrap:wrap;gap:10px;align-items:center;">
           <p class="muted" style="margin:0;">${f.showAll
-            ? `Showing everything, including ${blocked.length} programme${blocked.length === 1 ? '' : 's'} run by a provincial agency outside ${esc(business().province || 'your province')}.`
-            : `${blocked.length} programme${blocked.length === 1 ? ' is' : 's are'} hidden: ${blocked.length === 1 ? 'it is' : 'they are'} run by a provincial agency outside ${esc(business().province || 'your province')}, so ${blocked.length === 1 ? 'it cannot' : 'they cannot'} fund a business based where yours is.`}</p>
+            ? `Showing everything, including ${blocked.length} closed or dismissed programme${blocked.length === 1 ? '' : 's'}.`
+            : `${blocked.length} programme${blocked.length === 1 ? ' has' : 's have'} closed or ${blocked.length === 1 ? 'was' : 'were'} dismissed by you, so ${blocked.length === 1 ? 'it is' : 'they are'} hidden.`}</p>
           <button class="btn ghost small-btn" data-funding-showall="${f.showAll ? '0' : '1'}">${f.showAll ? 'Hide them again' : 'Show them anyway'}</button>
         </div>
       </section>` : ''}
@@ -22852,10 +23036,19 @@ Added from INSYTE.` : 'Added from INSYTE.',
             </section>`).join('')}
             ${rest.length ? `<section class="funding-section">
               <div class="funding-section-head">
-                <h3>${sections.length ? 'Everything else' : 'All opportunities'}</h3>
+                <h3>${sections.length ? 'All other open funding' : 'All open funding'}</h3>
                 <span class="funding-section-count">${rest.length}</span>
+                <p class="muted">Every open programme you can apply for, whatever your industry.</p>
               </div>
               <div class="module-grid">${rest.map(renderRow).join('')}</div>
+            </section>` : ''}
+            ${otherProvince.length ? `<section class="funding-section">
+              <div class="funding-section-head">
+                <h3>Other provinces</h3>
+                <span class="funding-section-count">${otherProvince.length}</span>
+                <p class="muted">Run by a provincial agency outside ${esc(business().province || 'your province')}. Only open to businesses based in that province.</p>
+              </div>
+              <div class="module-grid">${otherProvince.map(renderRow).join('')}</div>
             </section>` : ''}
           </div>`
         : emptyState('No results match your filters', 'Try another industry, province, funding type or deadline filter.')}
@@ -23335,6 +23528,13 @@ Added from INSYTE.` : 'Added from INSYTE.',
     return !at || (Date.now() - new Date(at).getTime()) > TENDER_FEED_STALE_MS;
   }
 
+  function tenderPullDays() {
+    const at = tenderSyncState().feedUpdatedAt;
+    if (!at) return 14;
+    const gap = Math.ceil((Date.now() - new Date(at).getTime()) / 86400000) + 1;
+    return Math.min(14, Math.max(2, gap || 14));
+  }
+
   async function requestTenderIngest() {
     if (Date.now() - lastTenderPullAt < TENDER_PULL_COOLDOWN_MS) return { ok: false, reason: 'cooldown' };
     lastTenderPullAt = Date.now();
@@ -23346,8 +23546,14 @@ Added from INSYTE.` : 'Added from INSYTE.',
           apikey: INSYTE_SUPABASE_ANON_KEY,
           Authorization: `Bearer ${INSYTE_SUPABASE_ANON_KEY}`
         },
-        // 60 days so tenders published a while ago but still open are caught.
-        body: JSON.stringify({ sinceDays: 60, pageSize: 200 })
+        // Only the days missing since the feed last updated (plus one for
+        // overlap), capped at 14. Everything older is already in the table:
+        // upserts keep it. The ingest walks eTenders a day at a time around
+        // broken records there, so asking for 60 days kept the founder
+        // waiting about two minutes for notices INSYTE already had.
+        // pageSize 50: the ingest now ignores it, but an older deployed
+        // ingest honours it, and eTenders errors on pages of 200.
+        body: JSON.stringify({ sinceDays: tenderPullDays(), pageSize: 50 })
       });
       const result = await response.json().catch(() => ({}));
       if (!response.ok) return { ok: false, reason: result.error || `HTTP ${response.status}` };
@@ -24248,22 +24454,163 @@ Added from INSYTE.` : 'Added from INSYTE.',
     return `<section class="panel glass sign-card">
       <p class="eyebrow">Signature</p>
       <h3>Sign your response</h3>
-      <p class="muted">Draw your signature in the box, or type your name. This creates a signed declaration you can save as a PDF and attach to the tender.</p>
+      <p class="muted">Three ways: draw it in the box, upload a photo of your signature on paper, or type your name. Whichever you choose, the mark ends up in the box below and goes into the declaration, the PDF and the Word file.</p>
       <div class="sign-pad-wrap">
         <canvas id="signPad" class="sign-pad" width="600" height="200" aria-label="Signature drawing area"></canvas>
         <button type="button" class="btn ghost small-btn sign-clear" data-sign="clear">Clear</button>
       </div>
+      <div class="action-row sign-ways">
+        <label class="btn ghost small-btn sign-upload-btn">
+          Upload a picture of your signature
+          <input type="file" id="signUpload" accept="image/*" capture="environment" hidden>
+        </label>
+        <button class="btn ghost small-btn" data-sign="typed">Sign with typed name</button>
+      </div>
+      <p class="muted sign-upload-hint" id="signUploadHint">A photo of your signature on paper works. The paper is removed and only the ink is kept.</p>
       <div class="sign-fields">
-        <label>Or type your name to sign <input type="text" id="signTyped" placeholder="${esc(signatureName() || 'Your full name')}"></label>
-        <label>Capacity <input type="text" id="signCapacity" placeholder="e.g. Owner / Director"></label>
+        <label>Name of the person signing <input type="text" id="signTyped" value="${esc(signatureName())}" placeholder="Your full name"></label>
+        <label>Capacity
+          <input type="text" id="signCapacity" list="signCapacityOptions" placeholder="e.g. Director">
+          <datalist id="signCapacityOptions">
+            <option value="Director"></option>
+            <option value="Member"></option>
+            <option value="Sole proprietor"></option>
+            <option value="Partner"></option>
+            <option value="Trustee"></option>
+            <option value="Duly authorised representative"></option>
+          </datalist>
+        </label>
         <label>Date <input type="date" id="signDate" value="${esc(today)}"></label>
       </div>
       <p class="form-error hidden" id="signError" aria-live="polite"></p>
       <div class="action-row">
         <button class="btn primary" data-sign="apply">Apply signature</button>
-        <button class="btn ghost" data-sign="typed">Sign with typed name</button>
       </div>
+      <p class="muted" style="font-size:.82rem;">A signature you apply here is stored on your account and offered the next time, so you do not sign again on a phone for every tender.</p>
     </section>`;
+  }
+
+  // ── A photographed or scanned signature ──────────────────────────
+  //  A founder on a phone has usually already signed something on
+  //  paper. Dropping that photo straight in does not work: the paper
+  //  comes with it, so the PDF shows a grey-white rectangle sitting on
+  //  the page, and a bid evaluator reads that as a pasted image rather
+  //  than a signature.
+  //
+  //  So the paper is removed. Anything light enough to be paper becomes
+  //  transparent, the ink keeps a soft edge rather than being hard
+  //  thresholded into a jagged stencil, and the result is cropped to
+  //  the ink and centred on the pad.
+  //
+  //  The threshold is deliberately generous. A photo taken indoors is
+  //  never white — it is grey, or yellow under a bulb — and a tight
+  //  threshold would leave the page behind. Ink is far darker than any
+  //  lighting makes paper, so judging by luminance is safe.
+  const SIG_MAX_BYTES = 8 * 1024 * 1024;   // a modern phone photo
+  const SIG_PAPER_LUMA = 180;              // lighter than this is paper
+  const SIG_INK_LUMA = 110;                // darker than this is certainly ink
+
+  function signatureFromImage(img) {
+    const canvas = $('#signPad');
+    if (!canvas) return { ok: false, reason: 'The signature pad is not on screen.' };
+
+    //  Worked on at the photo's own size so the trim is accurate, then
+    //  scaled once onto the pad. Scaling first would blur the edges and
+    //  the trim would chase the blur.
+    const w = Math.min(img.width, 2000);
+    const h = Math.round(img.height * (w / img.width));
+    const buf = document.createElement('canvas');
+    buf.width = w; buf.height = h;
+    const bctx = buf.getContext('2d', { willReadFrequently: true });
+    bctx.drawImage(img, 0, 0, w, h);
+
+    let pixels;
+    try {
+      pixels = bctx.getImageData(0, 0, w, h);
+    } catch (error) {
+      //  A cross-origin image taints the canvas. Not reachable from a
+      //  file picker, but this runs on whatever a founder chooses.
+      return { ok: false, reason: 'That image could not be read. Try a photo taken on this device.' };
+    }
+
+    const d = pixels.data;
+    let minX = w, minY = h, maxX = -1, maxY = -1;
+    for (let i = 0; i < d.length; i += 4) {
+      const luma = 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+      let alpha;
+      if (luma >= SIG_PAPER_LUMA) alpha = 0;
+      else if (luma <= SIG_INK_LUMA) alpha = 255;
+      else alpha = Math.round(255 * (SIG_PAPER_LUMA - luma) / (SIG_PAPER_LUMA - SIG_INK_LUMA));
+      //  Ink is redrawn in the app's own ink colour rather than kept as
+      //  the photo's grey, so a signature drawn on the pad and one
+      //  photographed off paper look like the same person signed.
+      d[i] = 26; d[i + 1] = 42; d[i + 2] = 58;
+      d[i + 3] = alpha;
+      if (alpha > 40) {
+        const p = i / 4, x = p % w, y = (p - x) / w;
+        if (x < minX) minX = x;
+        if (x > maxX) maxX = x;
+        if (y < minY) minY = y;
+        if (y > maxY) maxY = y;
+      }
+    }
+    if (maxX < 0) {
+      return { ok: false, reason: 'No signature was found in that picture. Use a darker pen, or better light.' };
+    }
+    bctx.putImageData(pixels, 0, 0);
+
+    //  A little air around the ink, clamped to the image.
+    const pad = Math.round(Math.max(maxX - minX, maxY - minY) * 0.04);
+    const cx = Math.max(0, minX - pad);
+    const cy = Math.max(0, minY - pad);
+    const cw = Math.min(w - cx, maxX - minX + pad * 2 + 1);
+    const ch = Math.min(h - cy, maxY - minY + pad * 2 + 1);
+
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const scale = Math.min((canvas.width - 32) / cw, (canvas.height - 24) / ch);
+    const dw = cw * scale, dh = ch * scale;
+    ctx.drawImage(buf, cx, cy, cw, ch,
+      (canvas.width - dw) / 2, (canvas.height - dh) / 2, dw, dh);
+
+    signPadDirty = true;
+    return { ok: true };
+  }
+
+  //  The upload lands ON THE PAD rather than straight into the record.
+  //  That is the whole trick: once it is ink on the canvas, Clear,
+  //  Apply, the stored copy and every export already work, with no
+  //  second path to keep in step. The founder can also see what was
+  //  read off the paper before committing to it.
+  function setSignatureFromFile(file) {
+    const err = $('#signError');
+    const show = m => { if (err) { err.textContent = m; err.classList.remove('hidden'); } };
+    const clear = () => { if (err) { err.textContent = ''; err.classList.add('hidden'); } };
+    if (!file) return;
+    if (!/^image\/(jpeg|png|webp|heic|heif)$/i.test(file.type)) {
+      return show('Use a photo or scan in JPG, PNG or WebP.');
+    }
+    if (file.size > SIG_MAX_BYTES) {
+      return show('That picture is over 8MB. Take it again at a lower resolution.');
+    }
+    clear();
+    const reader = new FileReader();
+    reader.onerror = () => show('That file could not be read.');
+    reader.onload = e => {
+      const img = new Image();
+      img.onerror = () => show('That image could not be opened. JPG, PNG or WebP work best.');
+      img.onload = () => {
+        const result = signatureFromImage(img);
+        if (!result.ok) return show(result.reason);
+        //  Not applied automatically. A signature is the one thing in
+        //  this app that should never be committed on the founder's
+        //  behalf — she presses Apply, having seen it.
+        const hint = $('#signUploadHint');
+        if (hint) hint.textContent = 'Picture read. Check it in the box above, then press "Apply signature".';
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
   }
 
   function drawTypedSignature(text) {
@@ -24301,18 +24648,104 @@ Added from INSYTE.` : 'Added from INSYTE.',
     if (!signPadHasInk()) return show('Draw your signature, or type your name and press "Sign with typed name".');
     const name = ($('#signTyped')?.value || '').trim() || signatureName();
     if (!name) return show('Enter the name of the person signing.');
-    record().tenderSignature = {
+    const signature = {
       image: canvas.toDataURL('image/png'),
       name,
       capacity: ($('#signCapacity')?.value || '').trim(),
-      date: $('#signDate')?.value || new Date().toISOString().slice(0, 10)
+      date: $('#signDate')?.value || new Date().toISOString().slice(0, 10),
+      updatedAt: new Date().toISOString()
     };
+    record().tenderSignature = signature;
     signPadDirty = false;
     save();
     renderApp();
+    //  Deliberately after the render. The founder's signature is on
+    //  screen the instant she presses the button; the cloud copy is
+    //  what carries it to her next device, and a slow network must not
+    //  make the button feel broken.
+    saveSignatureToCloud(signature);
+  }
+
+  // ── The cloud copy ───────────────────────────────────────────────
+  //  A signature is the most sensitive thing this app stores. Anyone
+  //  who can read it can paste it onto a document the founder never
+  //  saw, so `user_signatures` is owner-only at the database level —
+  //  see supabase/migrations/008_user_signature.sql. No staff view, no
+  //  admin screen, no policy that lets one founder read another's.
+  //
+  //  Local stays the source of truth for rendering, as with tracking:
+  //  the page never waits on a round trip, and a failed sync loses
+  //  nothing because the record already holds it.
+  async function saveSignatureToCloud(signature) {
+    if (!sb || !currentUser || !signature?.image) return;
+    try {
+      const { error } = await sb.from('user_signatures').upsert({
+        user_id: currentUser.id,
+        image: signature.image,
+        signer_name: signature.name || '',
+        capacity: signature.capacity || '',
+        signed_on: signature.date || null,
+        updated_at: signature.updatedAt || new Date().toISOString()
+      }, { onConflict: 'user_id' });
+      if (error) throw error;
+    } catch (error) {
+      console.warn('[INSYTE] could not sync the signature to the cloud:', error.message);
+    }
+  }
+
+  async function removeSignature() {
+    delete record().tenderSignature;
+    save();
+    renderApp();
+    if (!sb || !currentUser) return;
+    try {
+      await sb.from('user_signatures').delete().eq('user_id', currentUser.id);
+    } catch (error) {
+      // Said out loud. "Removed" that only removed the local copy would
+      // be a promise this app had not kept.
+      console.warn('[INSYTE] could not remove the cloud signature:', error.message);
+      notify('Removed on this device, but the stored copy could not be deleted. Try again when you are back online.', 'error');
+    }
+  }
+
+  async function loadSignatureFromCloud(userId = currentUser?.id) {
+    if (!sb || !userId) return;
+    try {
+      const { data, error } = await sb.from('user_signatures')
+        .select('image, signer_name, capacity, signed_on, updated_at')
+        .eq('user_id', userId)
+        .maybeSingle();
+      if (error) throw error;
+      if (!data?.image) return;
+      const local = record(userId).tenderSignature;
+      // Last write wins, compared honestly rather than assuming the
+      // cloud is newer — this device may have been the one offline.
+      if (local?.updatedAt && new Date(local.updatedAt) >= new Date(data.updated_at)) return;
+      record(userId).tenderSignature = {
+        image: data.image,
+        name: data.signer_name || '',
+        capacity: data.capacity || '',
+        date: data.signed_on || '',
+        updatedAt: data.updated_at
+      };
+      save();
+    } catch (error) {
+      console.warn('[INSYTE] could not load the stored signature:', error.message);
+    }
   }
 
   function bindSignaturePad() {
+    const upload = $('#signUpload');
+    if (upload && upload.dataset.bound !== '1') {
+      upload.dataset.bound = '1';
+      upload.addEventListener('change', () => {
+        setSignatureFromFile(upload.files && upload.files[0]);
+        // Cleared so choosing the SAME file again still fires a change
+        // event — otherwise a founder who retakes the photo under the
+        // same name gets nothing and no explanation.
+        upload.value = '';
+      });
+    }
     const canvas = $('#signPad');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -24688,7 +25121,7 @@ Added from INSYTE.` : 'Added from INSYTE.',
       if (act === 'clear') { const c = $('#signPad'); if (c) { c.getContext('2d').clearRect(0, 0, c.width, c.height); signPadDirty = false; } return; }
       if (act === 'typed') { const t = ($('#signTyped')?.value || '').trim() || signatureName(); if (!t) { const e = $('#signError'); if (e) { e.textContent = 'Type a name first.'; e.classList.remove('hidden'); } return; } return drawTypedSignature(t); }
       if (act === 'apply') return applyTenderSignature();
-      if (act === 'remove') { delete record().tenderSignature; save(); renderApp(); return; }
+      if (act === 'remove') return removeSignature();
       if (act === 'print') return printSignedDeclaration();
     }));
     bindLiveTenderActions();
@@ -27038,6 +27471,12 @@ Added from INSYTE.` : 'Added from INSYTE.',
           ${guidedFor(section) ? `<div class="ti-guided-block"><p class="eyebrow">Guided questions</p><p class="muted">INSYTE writes this section from your answers. It will not invent a client, a project, a figure or a certificate. Anything you do not supply appears as "${TI_INFO_REQUIRED}"</p>${guidedFor(section)}<div class="action-row"><button class="btn primary" data-ti-save-answers="${tiEsc(section.id)}">Save answers and redraft</button></div></div>` : ''}
           <p class="eyebrow">Draft</p>
           <textarea class="ti-draft" rows="14" data-ti-draft="${tiEsc(section.id)}">${tiEsc(text)}</textarea>
+          ${//  The declaration is the one section that ends in a
+            //  signature, and until now the only way to sign was in the
+            //  older response builder, which this screen never links
+            //  to. So the founder read "Signed: ______" with nothing on
+            //  the page to do about it.
+            section.id === 'declaration' ? renderSignaturePanel() : ''}
           <div class="action-row">
             <button class="btn primary" data-ti-save-draft="${tiEsc(section.id)}">Save my edit</button>
             <button class="btn ghost" data-ti-regen="${tiEsc(section.id)}">Redraft from my answers</button>
@@ -27511,6 +27950,46 @@ Added from INSYTE.` : 'Added from INSYTE.',
     ].filter(Boolean);
   }
 
+  //  Word cannot take a data URL, so the base64 is decoded to bytes.
+  //  Returns an empty list when nothing is signed, so the caller can
+  //  spread it unconditionally.
+  function tiDocxSignature(lib) {
+    const sig = (typeof tenderSignature === 'function') ? tenderSignature() : null;
+    if (!sig?.image) return [];
+    const { Paragraph, TextRun, ImageRun, HeadingLevel } = lib;
+    if (!ImageRun) return [];
+    let bytes;
+    try {
+      const base64 = String(sig.image).split(',')[1] || '';
+      const binary = atob(base64);
+      bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+    } catch (error) {
+      console.warn('[INSYTE] the signature could not be written into the Word file:', error.message);
+      return [];
+    }
+    const line = (label, value) => new Paragraph({
+      spacing: { after: 80 },
+      children: [new TextRun({ text: `${label}: `, bold: true, size: 20 }), new TextRun({ text: value || '—', size: 20 })]
+    });
+    return [
+      new Paragraph({ text: 'Signature', heading: HeadingLevel.HEADING_1, spacing: { before: 400, after: 160 } }),
+      new Paragraph({
+        spacing: { after: 120 },
+        children: [new ImageRun({ data: bytes, type: 'png', transformation: { width: 260, height: 87 } })]
+      }),
+      line('Name', sig.name),
+      line('Capacity', sig.capacity),
+      line('Date', sig.date),
+      new Paragraph({
+        spacing: { before: 120 },
+        children: [new TextRun({
+          text: 'Signed electronically through INSYTE by the person named above.',
+          italics: true, size: 16
+        })]
+      })
+    ];
+  }
+
   async function tiDownloadDocx(t, a) {
     if (tiState.exporting) return;
     tiState.exporting = true;
@@ -27542,7 +28021,14 @@ Added from INSYTE.` : 'Added from INSYTE.',
             children: [
               new Paragraph({ text: 'Table of contents', heading: HeadingLevel.HEADING_1, spacing: { after: 200 } }),
               new TableOfContents('Contents', { hyperlink: true, headingStyleRange: '1-3' }),
-              ...planDocxParagraphs(tiProposalMarkdown(t, a), lib, { skipPreamble: true })
+              ...planDocxParagraphs(tiProposalMarkdown(t, a), lib, { skipPreamble: true }),
+              //  The declaration text already names the signatory. The
+              //  MARK itself only reaches the buyer if it is in the
+              //  file, so it is appended here rather than left as
+              //  something the founder has to print and sign by hand
+              //  after exporting — which is the step this feature
+              //  exists to remove.
+              ...tiDocxSignature(lib)
             ]
           }
         ]
@@ -27597,6 +28083,11 @@ Added from INSYTE.` : 'Added from INSYTE.',
   .cover .biz { font-size: 19pt; font-weight: bold; margin: 10px 0 14px; color: #1a2a3a; }
   .cover .note { margin-top: 46px; font-size: 9pt; font-style: normal; color: #6b6480; }
   .contents { page-break-after: always; }
+  .signature-block { page-break-inside: avoid; margin-top: 18px; }
+  .signature-block h3 { border-top: 1px solid #999; padding-top: 12px; }
+  .signature-block img { max-height: 28mm; max-width: 80mm; display: block; margin: 6px 0 10px; }
+  .sig-meta { width: auto; }
+  .sig-meta th { width: 30mm; background: #F2F7FB; }
   .contents h2 { page-break-before: avoid; }
   .contents ol { font-family: "Helvetica Neue", Arial, sans-serif; font-size: 11pt; line-height: 2; }
   .gap { background: #fff4c9; border-left: 3px solid #f0a202; padding: 7px 11px; margin: 0 0 10px; font-style: normal; }
@@ -27622,6 +28113,24 @@ Added from INSYTE.` : 'Added from INSYTE.',
 </section>
 <section class="contents"><h2>Contents</h2><ol>${sections.map(s => `<li>${tiEsc(s.title)}</li>`).join('')}</ol></section>
 ${sections.map(s => `<section><h2>${tiEsc(s.title)}</h2>${tiMarkdownToHtml(tiSectionText(t, a, s)).replace(/class="ti-gap"/g, 'class="gap"').replace(/class="ti-num"/g, 'class="num"').replace(/class="ti-table"/g, '')}</section>`).join('')}
+${(() => {
+  // The signature itself, not just the typed line naming who signed.
+  // Without this the founder exports a PDF and still has to print it,
+  // sign it by hand and scan it back — the exact round trip the pad
+  // and the upload exist to remove.
+  const sig = (typeof tenderSignature === 'function') ? tenderSignature() : null;
+  if (!sig || !sig.image) return '';
+  return `<section class="signature-block">
+    <h3>Signature</h3>
+    <img src="${sig.image}" alt="Signature of ${tiEsc(sig.name || '')}">
+    <table class="sig-meta">
+      <tr><th>Name</th><td>${tiEsc(sig.name || '—')}</td></tr>
+      <tr><th>Capacity</th><td>${tiEsc(sig.capacity || '—')}</td></tr>
+      <tr><th>Date</th><td>${tiEsc(sig.date || '—')}</td></tr>
+    </table>
+    <p style="font-size:9pt;color:#6b6480;font-style:italic;">Signed electronically through INSYTE by the person named above.</p>
+  </section>`;
+})()}
 </body></html>`;
     win.document.open();
     win.document.write(html);
@@ -27781,6 +28290,35 @@ ${sections.map(s => `<section><h2>${tiEsc(s.title)}</h2>${tiMarkdownToHtml(tiSec
     }));
 
     // --- proposal ---
+    //  The declaration section carries the signature panel, so the pad
+    //  and the upload need binding here too. Both guard against being
+    //  bound twice and both no-op when the panel is not on screen,
+    //  which is every section but one.
+    bindSignaturePad();
+    $$('[data-sign]').forEach(btn => {
+      if (btn.dataset.bound === '1') return;
+      btn.dataset.bound = '1';
+      btn.addEventListener('click', () => {
+        const act = btn.dataset.sign;
+        if (act === 'clear') {
+          const c = $('#signPad');
+          if (c) { c.getContext('2d').clearRect(0, 0, c.width, c.height); signPadDirty = false; }
+          return;
+        }
+        if (act === 'typed') {
+          const typed = ($('#signTyped')?.value || '').trim() || signatureName();
+          if (!typed) {
+            const e = $('#signError');
+            if (e) { e.textContent = 'Type a name first.'; e.classList.remove('hidden'); }
+            return;
+          }
+          return drawTypedSignature(typed);
+        }
+        if (act === 'apply') return applyTenderSignature();
+        if (act === 'remove') return removeSignature();
+        if (act === 'print') return printSignedDeclaration();
+      });
+    });
     $$('[data-ti-section]').forEach(btn => btn.addEventListener('click', () => {
       tiState.sectionOpen = tiState.sectionOpen === btn.dataset.tiSection ? '' : btn.dataset.tiSection;
       renderApp();
@@ -27947,7 +28485,7 @@ ${sections.map(s => `<section><h2>${tiEsc(s.title)}</h2>${tiMarkdownToHtml(tiSec
                 : ''}</p>
         </div>
       </div>
-      ${f.pulling ? `<div class="sync-note"><b>Pulling the latest tenders from eTenders.</b> <span class="muted">This takes about fifteen seconds. The list will update on its own.</span></div>` : ''}
+      ${f.pulling ? `<div class="sync-note"><b>Pulling the latest tenders from eTenders.</b> <span class="muted">This usually takes under a minute. The list will update on its own.</span></div>` : ''}
       ${f.refreshNote ? `<div class="sync-note"><span class="muted">${esc(f.refreshNote)}</span></div>` : ''}
       ${!f.pulling && sync.mode === 'cloud' && sync.feedUpdatedAt && tenderFeedIsStale()
         ? `<div class="sync-note"><b>This tender list has not updated since ${esc(new Date(sync.feedUpdatedAt).toLocaleDateString('en-ZA', { day: 'numeric', month: 'long' }))}.</b> <span class="muted">Press Refresh to pull the latest from eTenders. Tenders that have closed since then are hidden.</span></div>`
@@ -30128,6 +30666,26 @@ Scheduled through INSYTE.` : 'Scheduled through INSYTE.',
     <p class="muted" style="font-size:.85rem;margin:-4px 0 10px;">You will be asked next time whether this happened. That is the point.</p>
     <button class="btn primary" id="saveCheckin">Save operating check-in</button></section><section class="panel glass checkin-history-card"><h3>Operating history</h3><p class="muted">Each check-in becomes evidence for your Business health report and mentor conversations.</p>${userCheckins.length ? `<div class="list">${userCheckins.slice().reverse().map(c=>`<div class="list-item"><b>${esc(c.date)}</b>${(c.revenue || c.customers) ? `<p><b>${c.revenue ? 'R' + Number(String(c.revenue).replace(/[^0-9.]/g,'') || 0).toLocaleString('en-ZA') : '—'}</b>${c.customers ? ` from ${esc(c.customers)} customers` : ''}${c.metricName && c.metricValue ? ` · ${esc(c.metricName)}: ${esc(c.metricValue)}` : ''}</p>` : ''}${c.blocker ? `<p class="muted">Blocker: ${esc(c.blocker)}</p>` : ''}${c.commitment ? `<p class="muted">Committed: ${esc(c.commitment)}${c.commitmentDone ? ` (reported ${esc(c.commitmentDone)})` : ''}</p>` : ''}<p class="muted">${esc(c.operations)} - ${esc(c.sales)} - ${esc(c.cashflowConcern || c.cashflow || 'No cash-flow note')}</p></div>`).join('')}</div>` : emptyState('No operating check-ins yet', 'Save your first check-in after a real trading period.')}</section></div>`;
   }
+  // The report as a chat message: plain text, because chat bodies are
+  // escaped and shown as written (line breaks kept).
+  function reportShareText() {
+    const h = healthScore();
+    const list = checkins();
+    const latest = list.at(-1)?.date || new Date().toISOString().slice(0, 10);
+    const findings = (() => { try { return checkinFindings(checkinTrends()); } catch (e) { return []; } })().slice(0, 5);
+    const issues = (checkinIssues() || []).slice(0, 5);
+    const actions = (checkinActions() || []).slice(0, 5);
+    const lines = [
+      `Business health report: ${businessLabel()} (${latest})`,
+      `Health score: ${h.total}%, based on ${list.length} check-in${list.length === 1 ? '' : 's'}.`
+    ];
+    if (findings.length) lines.push('', 'What the numbers show:', ...findings.map(x => `• ${x}`));
+    lines.push('', 'Recurring issues:', ...(issues.length ? issues.map(x => `• ${x}`) : ['• None flagged yet']));
+    lines.push('', 'Recommended actions:', ...(actions.length ? actions.map((x, i) => `${i + 1}. ${x}`) : ['• None yet']));
+    lines.push('', 'Shared from INSYTE. I would value your thoughts on this.');
+    return lines.join('\n');
+  }
+
   function renderReports() {
     const h = healthScore();
     const issues = checkinIssues();
@@ -30136,20 +30694,28 @@ Scheduled through INSYTE.` : 'Scheduled through INSYTE.',
     if (!userCheckins.length) return `<section class="panel glass">${emptyState('Complete your first check-in to generate a personalised report', 'INSYTE will use your operations, sales, cash-flow, stock, staffing and document answers to build this report.')}</section>`;
     const latestDate = userCheckins.at(-1).date;
     const reportLabel = `${businessLabel()} Business health report - ${latestDate}`;
-    return `<div class="dashboard-grid"><section class="report-card glass"><h3>Business health report</h3><strong class="big">${h.total}%</strong><p class="muted">Trend based on ${userCheckins.length} stored check-in${userCheckins.length === 1 ? '' : 's'}.</p>${(() => { const f = checkinFindings(checkinTrends()); return f.length ? `<h3>What the numbers show</h3><ul>${f.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>` : ''; })()}<h3>Recurring issues</h3>${issues.length ? `<ul>${issues.map(i=>`<li>${esc(i)}</li>`).join('')}</ul>` : emptyState('No recurring issues flagged yet', 'Your check-ins do not show repeated concerns yet.')}<h3>Recommended actions</h3>${actions.length ? `<ol>${actions.map(a=>`<li>${esc(a)}</li>`).join('')}</ol>` : emptyState('No actions yet', 'Complete another check-in to strengthen recommendations.')}</section><aside class="panel glass report-share-card"><h3>Share with mentor</h3><label>Choose report<select><option>${esc(reportLabel)}</option></select></label><label>Choose mentor<select id="mentorShareTarget">${(() => {
-      // A founder working with a mentor through an ACCEPTED request had an
-      // empty dropdown here, because this only ever listed mentors they had
-      // separately clicked "Save mentor" on. Bookmarking is not the same as
-      // having a mentor — accepted requests come first, saved ones after.
-      const all = mentors();
-      const working = all.filter(m => m.requestStatus === 'accepted');
-      const savedOnly = all.filter(m => m.saved && m.requestStatus !== 'accepted');
-      if (!working.length && !savedOnly.length) return '<option value="">No mentor yet, apply to one first</option>';
+    return `<div class="dashboard-grid"><section class="report-card glass"><h3>Business health report</h3><div class="score-ring" style="--score:${Math.max(0, Math.min(100, Number(h.total) || 0))}"><strong>${h.total}%</strong><span>Health score</span></div><p class="muted">Trend based on ${userCheckins.length} stored check-in${userCheckins.length === 1 ? '' : 's'}.</p>${(() => { const f = checkinFindings(checkinTrends()); return f.length ? `<h3>What the numbers show</h3><ul>${f.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>` : ''; })()}<h3>Recurring issues</h3>${issues.length ? `<ul>${issues.map(i=>`<li>${esc(i)}</li>`).join('')}</ul>` : emptyState('No recurring issues flagged yet', 'Your check-ins do not show repeated concerns yet.')}<h3>Recommended actions</h3>${actions.length ? `<ol>${actions.map(a=>`<li>${esc(a)}</li>`).join('')}</ol>` : emptyState('No actions yet', 'Complete another check-in to strengthen recommendations.')}</section><aside class="panel glass report-share-card"><h3>Share with mentor</h3><label>Choose report<select><option>${esc(reportLabel)}</option></select></label><label>Choose mentor<select id="mentorShareTarget">${(() => {
+      // Only mentors who have ACCEPTED can receive it: the report is posted
+      // into the mentorship chat, and a chat only exists once accepted.
+      // Pending requests are listed but disabled so the founder can see why.
+      const byMentor = new Map();
+      (founderRequests || []).forEach(r => {
+        if (!r?.mentor_user_id || r.status === 'declined' || r.status === 'cancelled') return;
+        const prev = byMentor.get(r.mentor_user_id);
+        if (prev && prev.status === 'accepted') return;
+        const m = (registeredMentors || []).find(x => x.user_id === r.mentor_user_id);
+        byMentor.set(r.mentor_user_id, { requestId: r.id, name: m?.full_name || 'Your mentor', status: r.status });
+      });
+      const list = [...byMentor.values()];
+      const accepted = list.filter(m => m.status === 'accepted');
+      const pending = list.filter(m => m.status !== 'accepted');
+      if (!list.length) return '<option value="">No mentor yet, request one under Mentors first</option>';
       return [
-        working.length ? `<optgroup label="Your mentors">${working.map(m => `<option value="${esc(m.id)}">${esc(m.name)}</option>`).join('')}</optgroup>` : '',
-        savedOnly.length ? `<optgroup label="Saved">${savedOnly.map(m => `<option value="${esc(m.id)}">${esc(m.name)}</option>`).join('')}</optgroup>` : ''
+        accepted.length ? '<option value="">Choose a mentor</option>' : '<option value="">No mentor has accepted yet</option>',
+        accepted.length ? `<optgroup label="Your mentors">${accepted.map(m => `<option value="${esc(m.requestId)}">${esc(m.name)}</option>`).join('')}</optgroup>` : '',
+        pending.length ? `<optgroup label="Waiting for them to accept">${pending.map(m => `<option value="" disabled>${esc(m.name)}</option>`).join('')}</optgroup>` : ''
       ].join('');
-    })()}</select></label><label>Access duration<select id="mentorAccessDuration"><option>7 days</option><option>30 days</option></select></label><label class="consent-line"><input type="checkbox" id="mentorShareConsent"> I explicitly consent to share this report with the selected mentor for the chosen time only.</label><label><input type="checkbox" checked> Allow mentor comments</label><button class="btn primary" id="shareReportBtn">Share report</button><button class="btn ghost" id="revokeReportBtn">Revoke access</button><p class="form-error" id="reportShareError" role="alert" aria-live="assertive"></p></aside></div>`;
+    })()}</select></label><label class="consent-line"><input type="checkbox" id="mentorShareConsent"> I consent to sending this report to the selected mentor in our chat.</label><p class="muted" style="font-size:.85rem;margin:0;">It is posted in your conversation, where the mentor can read it and reply. A message cannot be unsent, so only share what you are happy for them to keep.</p><button class="btn primary" id="shareReportBtn">Send report to mentor</button><p class="form-error" id="reportShareError" role="alert" aria-live="assertive"></p>${record().reportShare?.mentorName && record().reportShare?.sharedAt ? `<p class="muted" style="font-size:.85rem;margin:0;">Last sent to ${esc(record().reportShare.mentorName)} on ${esc(record().reportShare.sharedAt)}.</p>` : ''}</aside></div>`;
   }  // Platform ratings for the Admin panel. Rows are fetched into
   // adminRatingRows by loadAdminRatings() — rendering never blocks on the
   // network, it just shows whatever has arrived.
@@ -35322,7 +35888,8 @@ Scheduled through INSYTE.` : 'Scheduled through INSYTE.',
       Promise.resolve(openFounderThread(founderThread))
         .finally(() => { founderThreadLoading = false; });
     }
-    if (activeTab === 'mentors' && !founderMentorLoaded && !founderMentorLoading) {
+    // Reports needs the same list for its "Share with mentor" dropdown.
+    if ((activeTab === 'mentors' || activeTab === 'reports') && !founderMentorLoaded && !founderMentorLoading) {
       founderMentorLoading = true;
       loadRegisteredMentors()
         .catch(error => console.warn('[INSYTE] mentor load failed:', error))
@@ -35406,7 +35973,7 @@ Scheduled through INSYTE.` : 'Scheduled through INSYTE.',
     doc.fileName = file.name;
     doc.uploadedAt = new Date().toISOString().slice(0, 10);
     doc.status = 'Completed';
-    doc.notes = `Uploaded file: ${file.name}.`;
+    doc.notes = `You have this one. File on your device: ${file.name}.`;
     db.activity.unshift(`Document replaced: ${doc.title}`);
     save();
     confirmSaved(`${doc.title} replaced`);
@@ -35549,7 +36116,7 @@ Scheduled through INSYTE.` : 'Scheduled through INSYTE.',
         event.target.value = '';
         const notice = $('#docQuotaNotice');
         if (notice) {
-          notice.textContent = `Your ${TIERS[quota.tier].name} plan holds ${quota.limit} documents and all ${quota.limit} are used. Remove one, or open Plan & billing for more room.`;
+          notice.textContent = `Your ${TIERS[quota.tier].name} plan tracks ${quota.limit} documents and all ${quota.limit} are used. Remove one, or open Plan & billing to track more.`;
           notice.classList.remove('hidden');
           notice.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
@@ -35558,9 +36125,9 @@ Scheduled through INSYTE.` : 'Scheduled through INSYTE.',
       const file = event.target.files[0];
       const documentName = $('#docUploadName')?.value.trim() || file.name;
       const documentType = $('#docUploadType')?.value || 'Other document';
-      documents().unshift({ id: uid('d'), title: documentName, category: documentType, status: 'Completed', uploaded: true, fileName: file.name, expiry: '', notes: `Uploaded file: ${file.name}.` });
+      documents().unshift({ id: uid('d'), title: documentName, category: documentType, status: 'Completed', uploaded: true, fileName: file.name, expiry: '', notes: `You have this one. File on your device: ${file.name}.` });
       pruneDuplicateDocuments();
-      db.activity.unshift(`Document uploaded: ${documentName}`);
+      db.activity.unshift(`Document recorded: ${documentName}`);
       save();
       automate('document.saved', { say: `${documentName} added to your vault` });
       renderApp();
@@ -35602,22 +36169,33 @@ Scheduled through INSYTE.` : 'Scheduled through INSYTE.',
   // Health report sharing: explicit, time-limited, revocable mentor access.
   // Consent is required per share and is recorded in the activity log.
   function bindReportSharingActions() {
-    $('#shareReportBtn')?.addEventListener('click', () => {
-      if (!$('#mentorShareConsent')?.checked) {
-        $('#reportShareError').textContent = 'Explicit consent is required before sharing a report with a mentor.';
-        return;
+    $('#shareReportBtn')?.addEventListener('click', async () => {
+      const errorEl = $('#reportShareError');
+      const fail = m => { if (errorEl) errorEl.textContent = m; };
+      if (!$('#mentorShareConsent')?.checked) return fail('Tick the consent box before sending your report to a mentor.');
+      const target = $('#mentorShareTarget');
+      const requestId = target?.value;
+      if (!requestId) return fail('Choose a mentor who has accepted your request.');
+      if (!sb) return fail('Cannot reach the INSYTE service. Check your connection.');
+      const mentorName = (target.selectedOptions?.[0]?.textContent || 'your mentor').trim();
+      const button = $('#shareReportBtn');
+      if (button) { button.disabled = true; button.textContent = 'Sending…'; }
+      try {
+        const { data, error } = await sb.from('mentorship_messages')
+          .insert({ request_id: requestId, sender_id: currentUser.id, body: reportShareText() })
+          .select()
+          .single();
+        if (error) throw error;
+        if (data && founderMessagesFor === requestId) founderMessages.push(data);
+      } catch (error) {
+        console.warn('[INSYTE] report share failed:', error);
+        if (button) { button.disabled = false; button.textContent = 'Send report to mentor'; }
+        return fail('The report did not send. Check your connection and try again.');
       }
-      record().reportShare = { active: true, duration: $('#mentorAccessDuration').value, sharedAt: new Date().toISOString().slice(0, 10) };
-      db.activity.unshift(`Report shared with mentor for ${record().reportShare.duration}`);
+      record().reportShare = { active: true, sharedAt: new Date().toISOString().slice(0, 10), requestId, mentorName };
+      db.activity.unshift(`Business health report sent to ${mentorName}`);
       save();
-      confirmSaved(`Report shared for ${record().reportShare.duration}`);
-      renderApp();
-    });
-    $('#revokeReportBtn')?.addEventListener('click', () => {
-      record().reportShare = { active: false, revokedAt: new Date().toISOString().slice(0, 10) };
-      db.activity.unshift('Mentor report access revoked');
-      save();
-      confirmSaved('Mentor access revoked');
+      confirmSaved(`Report sent to ${mentorName}. It is in your chat.`);
       renderApp();
     });
   }
@@ -36372,6 +36950,52 @@ Scheduled through INSYTE.` : 'Scheduled through INSYTE.',
   try { initCookieBar(); } catch (e) { console.warn('[INSYTE] cookie bar failed:', e); }
   try { handleHashRoute(); } catch (e) { console.warn('[INSYTE] hash route failed:', e); }
   $('#authForm').addEventListener('submit', handleAuth);
+
+  $('#googleAuthBtn')?.addEventListener('click', async () => {
+    const btn = $('#googleAuthBtn');
+    const err = $('#googleAuthError');
+    const fail = message => {
+      if (!err) return notify(message, 'error');
+      err.textContent = message;
+      err.classList.remove('hidden');
+    };
+    if (err) { err.textContent = ''; err.classList.add('hidden'); }
+
+    //  Opened from a file:// copy there is no Supabase client and no
+    //  address for Google to return to, so this would fail somewhere
+    //  less obvious than here.
+    if (!sb) {
+      return fail('Google sign-in needs the hosted version of INSYTE. Open the site rather than a downloaded copy of the file.');
+    }
+    if (!/^https?:$/.test(location.protocol)) {
+      return fail('Google sign-in only works over http(s). Open the hosted site rather than the file.');
+    }
+
+    btn.disabled = true;
+    const label = btn.querySelector('span');
+    const original = label ? label.textContent : '';
+    if (label) label.textContent = 'Taking you to Google…';
+    try {
+      const { error } = await cloudSignInWithGoogle();
+      if (error) throw error;
+      //  On success the browser leaves for Google, so nothing after this
+      //  runs. The button is deliberately NOT re-enabled here: during the
+      //  moment before the redirect commits, a second click would start a
+      //  second flow.
+    } catch (error) {
+      btn.disabled = false;
+      if (label) label.textContent = original;
+      //  The error worth naming. Until Google is switched on for the
+      //  project, Supabase refuses with "provider is not enabled", and
+      //  a founder reading that has no idea it is our configuration
+      //  rather than their account.
+      const raw = String(error?.message || '');
+      fail(/not enabled|unsupported provider/i.test(raw)
+        ? 'Google sign-in is not switched on for INSYTE yet. Use your email and password for now.'
+        : `Google sign-in could not start: ${raw || 'unknown error'}`);
+      console.warn('[INSYTE] Google sign-in failed to start:', error);
+    }
+  });
 
   $('#verifyTwoFactorBtn')
     ?.addEventListener(
