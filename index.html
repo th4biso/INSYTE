@@ -1686,7 +1686,10 @@ textarea { min-height: 92px; resize: vertical; }
 }
 .cmdk-empty { margin: 0; padding: 24px 12px; text-align: center; color: var(--muted); font-size: .88rem; }
 /* Mentor portal: taskbar counts, notifications, chat */
-.mentor-topbar { justify-content: space-between; }
+.mentor-topbar { justify-content: flex-start; }
+.mentor-topbar-id { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.mentor-topbar-id .tier-chip { margin-top: 0; }
+.mentor-topbar-id #mentorHomeStatus { font-size: .85rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .nav-count {
   display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px;
   border-radius: 999px; background: var(--accent); color: #fff; font-size: .7rem; font-weight: 700;
@@ -7093,11 +7096,12 @@ img, svg, video, canvas, table { max-width: 100%; }
 
       <section class="page" id="page-mentor-home">
         <div class="portal-topbar glass mentor-topbar">
-          <div>
-            <p class="eyebrow">Mentor portal</p>
-            <h2 id="mentorHomeName">Welcome back</h2>
+          <img data-asset="logo" alt="INSYTE logo" loading="lazy" />
+          <div class="mentor-topbar-id">
+            <span class="tier-chip tier-plus">Mentor portal</span>
+            <span class="muted" id="mentorHomeStatus"></span>
           </div>
-          <p class="muted" id="mentorHomeStatus"></p>
+          <span id="mentorHomeName" hidden>Welcome back</span>
           <div class="topbar-role" id="mentorTopbarRole"></div>
           <div class="notif-menu" id="mentorNotifMenu">
             <button class="notif-bell" id="mentorNotifBellBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="mentorNotifPop" aria-label="Notifications">
@@ -31395,7 +31399,7 @@ Scheduled through INSYTE.` : 'Scheduled through INSYTE.',
     $('#mentorSidebarName').textContent = currentUser.name || 'Mentor';
     $('#mentorHomeStatus').textContent = mentorProfile?.headline || '';
     $('#mentorTabTitle').textContent = mentorTabTitles[mentorTab];
-    $('#mentorKicker').textContent = mentorProfile?.job_title || 'Mentor portal';
+    $('#mentorKicker').textContent = [currentUser.name || 'Mentor', mentorProfile?.job_title].filter(Boolean).join(' · ');
     const mentorAvatarInitial = $('#mentorAvatarInitial');
     if (mentorAvatarInitial) mentorAvatarInitial.textContent = (currentUser.name || 'Mentor').trim().charAt(0).toUpperCase() || 'M';
     const mentorAccountEmail = $('#mentorAccountMenuEmail');
@@ -31498,7 +31502,7 @@ Scheduled through INSYTE.` : 'Scheduled through INSYTE.',
         <article class="component mentee-card">
           <div class="mentor-card-head">
             ${mentorAvatarMarkup('', r.business_name || 'Founder')}
-            <div><b>${esc(r.business_name || 'A founder')}</b><p class="muted">${esc(r.industry || 'Industry not captured')}</p></div>
+            <div><b>${esc(r.business_name || 'A founder')}</b><p class="muted">${esc(r.industry && r.industry !== 'Not captured' ? r.industry : 'Industry not captured')}</p></div>
           </div>
           ${r.goal ? `<p><b>What they need help with:</b> ${esc(r.goal)}</p>` : ''}
           <p class="muted">Mentoring since ${esc(timeAgo(r.created_at))}</p>
